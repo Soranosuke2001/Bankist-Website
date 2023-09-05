@@ -29,3 +29,16 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+// Displaying a cookie message
+const message = document.createElement("div");
+message.classList.add("cookie-message");
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+headerElClass.append(message);
+
+// Removing the cookie message on button click
+const closeCookieBtn = document.querySelector(".btn--close-cookie");
+closeCookieBtn.addEventListener("click", () => {
+  message.parentElement.removeChild(message);
+});
