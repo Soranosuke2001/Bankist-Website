@@ -42,3 +42,10 @@ const closeCookieBtn = document.querySelector(".btn--close-cookie");
 closeCookieBtn.addEventListener("click", () => {
   message.parentElement.removeChild(message);
 });
+
+// Styles for the cookie message
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+// Adding more height to the cookie message
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
