@@ -58,3 +58,14 @@ message.style.width = "100%";
 // Adding more height to the cookie message
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+// Scrolling Feature
+// --------------------------------------------------------------------------
+
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+// "Learn More" button click handler
+btnScrollTo.addEventListener("click", e => {
+  section1.scrollIntoView({ behavior: "smooth" });
+});
