@@ -69,3 +69,15 @@ const section1 = document.querySelector("#section--1");
 btnScrollTo.addEventListener("click", e => {
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+// Event Delegation (Nav Links Smooth Scrolling)
+// --------------------------------------------------------------------------
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+});
