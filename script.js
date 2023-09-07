@@ -81,3 +81,32 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// Tabbed Components
+// --------------------------------------------------------------------------
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+tabsContainer.addEventListener("click", function (e) {
+  // Fetching the button element on click
+  const clicked = e.target.closest(".operations__tab");
+
+  // Guard clause
+  // If the user didnt click on a button, then dont do anything
+  if (!clicked) return;
+
+  // Remove the currently active tab -> switch the button styling and text content
+  tabs.forEach(tab => tab.classList.remove("operations__tab--active"));
+  tabsContent.forEach(tab =>
+    tab.classList.remove("operations__content--active")
+  );
+
+  // Add the clicked button as the currently active tab
+  clicked.classList.add("operations__tab--active");
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
