@@ -110,3 +110,30 @@ tabsContainer.addEventListener("click", function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add("operations__content--active");
 });
+
+// Menu Fade Animation
+// --------------------------------------------------------------------------
+
+const nav = document.querySelector(".nav");
+
+function handleHover(e) {
+  // If the user doesnt hover over a nav link, do nothing
+  if (!e.target.classList.contains("nav__link")) return;
+
+  // Selecting the nav items
+  const link = e.target;
+  const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+  const logo = link.closest(".nav").querySelector("img");
+
+  // Setting a faded style to all other links and logo
+  siblings.forEach(el => {
+    if (el !== link) el.style.opacity = this;
+  });
+  logo.style.opacity = this;
+}
+
+// When the user hovers over a nav link item
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+
+// When the user stops hovering over a link item
+nav.addEventListener("mouseout", handleHover.bind(1));
