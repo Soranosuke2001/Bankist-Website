@@ -137,3 +137,25 @@ nav.addEventListener("mouseover", handleHover.bind(0.5));
 
 // When the user stops hovering over a link item
 nav.addEventListener("mouseout", handleHover.bind(1));
+
+// Sticky Nav Bar
+// --------------------------------------------------------------------------
+
+const navHeight = nav.getBoundingClientRect().height;
+
+function stickyNav(entries) {
+  // Getting the first threshold entry
+  const [entry] = entries;
+
+  // Add or remove the 'stiky' class name to the nav bar
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+}
+
+// Setting up the Intersection Observer API
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
