@@ -227,16 +227,31 @@ imgTargets.forEach(image => imgObserver.observe(image));
 const slides = document.querySelectorAll(".slide");
 const btnLeft = document.querySelector(".slider__btn--left");
 const btnRight = document.querySelector(".slider__btn--right");
+const dotContainer = document.querySelector(".dots");
 
 let currentSlide = 0;
 const maxSlide = slides.length - 1;
 
 // Translates each card to the left or right
-function cardSlideHandler() {
-  slides.forEach(
-    (slide, index) =>
-      (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
-  );
+function cardSlideHandler(skipTo = null) {
+  // If the user clicks on a specific dot, then skip to the card
+  if (skipTo) {
+    slides.forEach(
+      (slide, index) =>
+        (slide.style.transform = `translateX(${(index - skipTo) * 100}%)`)
+    );
+
+    // Setting the active dot
+    activeDot(skipTo);
+  } else {
+    slides.forEach(
+      (slide, index) =>
+        (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+    );
+
+    // Setting the active dot
+    activeDot(currentSlide);
+  }
 }
 
 // Function to handle which card to display
@@ -257,17 +272,63 @@ function nextSlide(direction) {
     }
   }
 
+  // Slide the carousel
   cardSlideHandler();
+
+  // Setting the active dot
+  activeDot(currentSlide);
 }
 
+// Returns the button HTML for each dot
+function dotButtonHTML(index) {
+  return `<button class="dots__dot" data-slide="${index}"></button>`;
+}
+
+// Creates all the dots for the carousel
+function createCarouselDots() {
+  slides.forEach((_, index) => {
+    dotContainer.insertAdjacentHTML("beforeend", dotButtonHTML(index));
+  });
+}
+
+// Setting which dot is active
+function activeDot(slide) {
+  document
+    .querySelectorAll(".dots__dot")
+    .forEach(dot => dot.classList.remove("dots__dot--active"));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add("dots__dot--active");
+}
+
+createCarouselDots();
 cardSlideHandler();
 
 // Right arrow button handler
-btnRight.addEventListener("click", function (e) {
+btnRight.addEventListener("click", function () {
   nextSlide("right");
 });
 
 // Left arrow button handler
-btnLeft.addEventListener("click", function (e) {
+btnLeft.addEventListener("click", function () {
   nextSlide("left");
+});
+
+// Left and Right arrow keys to navigate the carousel
+document.addEventListener("keydown", function (e) {
+  if (e.key === "ArrowLeft") nextSlide("left");
+  if (e.key === "ArrowRight") nextSlide("right");
+});
+
+// Dots on click event handler
+dotContainer.addEventListener("click", function (e) {
+  // Checking if the dot was clicked
+  if (e.target.classList.contains("dots__dot")) {
+    // Fetch which dot was clicked
+    const { slide } = e.target.dataset;
+
+    // Slide the carousel
+    cardSlideHandler(slide);
+  }
 });
