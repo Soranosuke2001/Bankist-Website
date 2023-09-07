@@ -1,4 +1,5 @@
 "use strict";
+// This is a marketing website for the Bankist application
 
 // Modal window
 // --------------------------------------------------------------------------
