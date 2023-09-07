@@ -187,3 +187,36 @@ allSections.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add("section--hidden");
 });
+
+// Lazy Loading Images
+// --------------------------------------------------------------------------
+
+const imgTargets = document.querySelectorAll("img[data-src]");
+
+function loadImg(entries, observer) {
+  const [entry] = entries;
+
+  // If the image is not intersecting with the viewport, do nothing
+  if (!entry.isIntersecting) return;
+
+  // Change the image src from lazy to high quality
+  entry.target.src = entry.target.dataset.src;
+
+  // Removing the 'lazy-img' class name after the new image is loaded
+  entry.target.addEventListener("load", function (e) {
+    entry.target.classList.remove("lazy-img");
+  });
+
+  // Stop observing the target images
+  observer.unobserve(entry.target);
+}
+
+// Setting up Intersection Observer API
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px",
+});
+
+// Setting up an observer for each image
+imgTargets.forEach(image => imgObserver.observe(image));
