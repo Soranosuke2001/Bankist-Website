@@ -220,3 +220,54 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 // Setting up an observer for each image
 imgTargets.forEach(image => imgObserver.observe(image));
+
+// Card Carousel
+// --------------------------------------------------------------------------
+
+const slides = document.querySelectorAll(".slide");
+const btnLeft = document.querySelector(".slider__btn--left");
+const btnRight = document.querySelector(".slider__btn--right");
+
+let currentSlide = 0;
+const maxSlide = slides.length - 1;
+
+// Translates each card to the left or right
+function cardSlideHandler() {
+  slides.forEach(
+    (slide, index) =>
+      (slide.style.transform = `translateX(${(index - currentSlide) * 100}%)`)
+  );
+}
+
+// Function to handle which card to display
+function nextSlide(direction) {
+  // Translate each card 1 to the left
+  if (direction === "right") {
+    if (currentSlide === maxSlide) {
+      currentSlide = 0;
+    } else {
+      currentSlide++;
+    }
+    // Translate each card 1 to the right
+  } else {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide;
+    } else {
+      currentSlide--;
+    }
+  }
+
+  cardSlideHandler();
+}
+
+cardSlideHandler();
+
+// Right arrow button handler
+btnRight.addEventListener("click", function (e) {
+  nextSlide("right");
+});
+
+// Left arrow button handler
+btnLeft.addEventListener("click", function (e) {
+  nextSlide("left");
+});
